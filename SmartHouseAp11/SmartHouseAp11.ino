@@ -47,7 +47,8 @@ void setup() {
 
 void loop() {
   restroomSwitch.init();
-  Serial.print(restroomSwitch.timePressed() + String(" milliseconds\n"));
+  Serial.print(String("Buttone is pressed ") + restroomSwitch.timePressed() + String(" milliseconds\n"));
+  Serial.print(String("Buttone is released ") + restroomSwitch.timeReleased() + String(" milliseconds\n"));
 
   // Включаем вентиляцию в сан.узле если прошло время RESTROOM_VENT_START, но еще не настало время "забытия"
   if((restroomSwitch.timePressed() >= RESTROOM_VENT_START) && (restroomSwitch.timePressed() < RESTROOM_LIGHT_FORGOTTEN)) digitalWrite(RESTROOM_VENT, HIGH);
