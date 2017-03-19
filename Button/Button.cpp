@@ -53,18 +53,19 @@ void Button::init () {
 	
 	if(digitalRead(_pin) == LOW) {
 		_milliseconds = millis();
-		_timePressed = _milliseconds - _previous_LOW_millis;
 		if(_button_state != LOW) {
 			//_milliseconds = millis();
 			_gap = _milliseconds - _previous_HIGH_millis;
 			_previous_LOW_millis = _milliseconds;
 			this->button_pressed(_gap);
 		}
+		_timePressed = _milliseconds - _previous_LOW_millis;
 		_button_state = LOW;
 	}
 
 	if(digitalRead(_pin) == HIGH) {
 		if(_button_state != HIGH) {
+			_timePressed = 0;
 			_milliseconds = millis();
 			_gap = _milliseconds - _previous_LOW_millis;
 			_previous_HIGH_millis = _milliseconds;
