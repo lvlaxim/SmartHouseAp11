@@ -50,10 +50,11 @@ void Button::init () {
 
 	
 	
-	_milliseconds = millis();
+	
 	if(digitalRead(_pin) == LOW) {
+		_milliseconds = millis();
 		if(_button_state != LOW) {
-			_timeReleased = 0;
+			//_milliseconds = millis();
 			_gap = _milliseconds - _previous_HIGH_millis;
 			_previous_LOW_millis = _milliseconds;
 			this->button_pressed(_gap);
@@ -64,12 +65,12 @@ void Button::init () {
 
 	if(digitalRead(_pin) == HIGH) {
 		if(_button_state != HIGH) {
-			_timePressed = 0;			
+			_timePressed = 0;
+			_milliseconds = millis();
 			_gap = _milliseconds - _previous_LOW_millis;
 			_previous_HIGH_millis = _milliseconds;
 			this->button_released(_gap);
 		}
-		_timeReleased = _milliseconds - _previous_HIGH_millis;
 		_button_state = HIGH;
 	}
 }
@@ -113,10 +114,6 @@ unsigned long Button::gap() {
 
 unsigned long Button::timePressed() {
 	return this->_timePressed;
-}
-
-unsigned long Button::timeReleased() {
-	return this->_timeReleased;
 }
 
 int Button::get_minimum_gap() {
