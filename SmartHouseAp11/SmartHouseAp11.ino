@@ -24,7 +24,6 @@ void on_long_release() {
 void on_long_press() {
     Serial.print(String("button pressed after long time: ") + restroomSwitch.gap() + String(" milliseconds\n"));
     digitalWrite(RESTROOM_LIGHT, HIGH);
-    //digitalWrite(RESTROOM_VENT, HIGH);
 }
 void on_bounced_release() {
     Serial.print(String("button released after a bounce: ") + restroomSwitch.gap() + String(" milliseconds\n"));
@@ -50,8 +49,10 @@ void loop() {
   restroomSwitch.init();
   Serial.print(restroomSwitch.timePressed() + String(" milliseconds\n"));
 
+  // Включаем вентиляцию в сан.узле если прошло время RESTROOM_VENT_START, но еще не настало время "забытия"
   if((restroomSwitch.timePressed() >= RESTROOM_VENT_START) && (restroomSwitch.timePressed() < RESTROOM_LIGHT_FORGOTTEN)) digitalWrite(RESTROOM_VENT, HIGH);
   
+  // Если прошло время RESTROOM_LIGHT_FORGOTTEN значит про сан узел забыли -- выключаем всё.
   if(restroomSwitch.timePressed() >= RESTROOM_LIGHT_FORGOTTEN){
     digitalWrite(RESTROOM_LIGHT, LOW);
     digitalWrite(RESTROOM_VENT, LOW);
