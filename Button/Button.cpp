@@ -47,9 +47,15 @@ void Button::_on_bounced_press(unsigned long gap) {
 }
 
 void Button::init () {
+
+	
+	
+	
 	if(digitalRead(_pin) == LOW) {
+		_milliseconds = millis();
+		_timePressed = _milliseconds - _previous_LOW_millis;
 		if(_button_state != LOW) {
-			_milliseconds = millis();
+			//_milliseconds = millis();
 			_gap = _milliseconds - _previous_HIGH_millis;
 			_previous_LOW_millis = _milliseconds;
 			this->button_pressed(_gap);
@@ -103,6 +109,10 @@ void Button::on_bounced_press(void(*on_bounced_press)()) {
 
 unsigned long Button::gap() {
 	return this->_gap;
+}
+
+unsigned long Button::timePressed() {
+	return this->_timePressed;
 }
 
 int Button::get_minimum_gap() {

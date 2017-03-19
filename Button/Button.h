@@ -22,6 +22,7 @@ class Button {
 		void on_bounced_release (void (*)());
 		void on_bounced_press (void (*)());
 		unsigned long gap ();
+		unsigned long timePressed ();
 		void enable_debug ();
 		void disable_debug ();
 		int get_minimum_gap();
@@ -40,6 +41,7 @@ class Button {
 		unsigned long _previous_LOW_millis = 0;
 		unsigned long _previous_HIGH_millis = 0;
 		unsigned long _gap = 0;
+		unsigned long _timePressed = 0;
 		unsigned long _milliseconds = 0;
 		boolean _debug = false;
 		int _minimum_gap = 35;
