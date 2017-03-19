@@ -1,6 +1,8 @@
 #include "Button.h"
 
-#define RESTROOM_LIGHT 7      // Свет в сан. узле -- 7 пин
+#define RESTROOM_LIGHT_FORGOTTEN 5000      // Время в миллисекундах, после прохождения которого считается, что свет в сан. узле забыли выключить.
+
+#define RESTROOM_LIGHT 7                   // Свет в сан. узле -- 7 пин
 
 Button restroomSwitch(2); // Выключатель в сан. узле -- 2-й пин
 
@@ -42,6 +44,7 @@ void setup() {
 void loop() {
   restroomSwitch.init();
   Serial.print(restroomSwitch.timePressed() + String(" milliseconds\n"));
-  //Serial.print(button.gap() + String(" milliseconds\n"));
+  if(restroomSwitch.timePressed() >= RESTROOM_LIGHT_FORGOTTEN) digitalWrite(RESTROOM_LIGHT, LOW);
+  
   delay(1000);
 }
